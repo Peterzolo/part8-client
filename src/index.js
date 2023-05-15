@@ -3,8 +3,6 @@ import React from "react";
 import App from "./App";
 import { Provider } from "react-redux";
 import { ApolloProvider } from "@apollo/client";
-
-import "./index.css";
 import store from "./redux/store";
 import { client } from "./apolo/apoloService";
 
