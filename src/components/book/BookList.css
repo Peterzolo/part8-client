@@ -1,0 +1,13 @@
+.book-list-title {
+  text-align: center;
+  margin-top: 20px;
+}
+.book-hero {
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.book-wrap {
+  padding: 20px;
+}

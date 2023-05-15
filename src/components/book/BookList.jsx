@@ -1,6 +1,8 @@
 import React from "react";
 import { gql, useQuery } from "@apollo/client";
 
+import "../book/BookList.css";
+
 const ALL_BOOKS = gql`
   query {
     allBooks {
@@ -24,14 +26,13 @@ const BookList = () => {
   }
 
   return (
-    <div>
-      <h2>Book List</h2>
-
-      <div className="container">
+    <div className="container">
+      <h2 className="book-list-title">Book List</h2>
+      <div className="book-hero">
         {data.allBooks &&
           data.allBooks.map((book) => (
-            <div key={book.id}>
-              <div>{book.title}</div>
+            <div key={book.id} className="book-wrap">
+              <div className="book">{book.title}</div>
             </div>
           ))}
       </div>
