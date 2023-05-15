@@ -1,24 +1,17 @@
 import React from "react";
-import { gql, useQuery } from "@apollo/client";
-import BookList from "./components/book/BookList";
 
-const ALL_BOOKS = gql`
-  query {
-    allBooks {
-      title
-      published
-      author
-      id
-    }
-  }
-`;
+import BookList from "./components/book/BookList";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const App = () => {
-  const { loading, error, data } = useQuery(ALL_BOOKS);
-
   return (
     <div className="container">
-      <BookList data={data} error={error} loading={loading} />
+      <Router>
+        <Routes>
+          <Route path="/" element={<BookList />} />
+        </Routes>
+      </Router>
+      <BookList />
     </div>
   );
 };
