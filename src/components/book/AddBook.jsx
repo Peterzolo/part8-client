@@ -99,7 +99,9 @@ const AddBook = () => {
             onChange={(e) => setGenres(e.target.value.split(","))}
           />
         </div>
-        <button type="submit">Add Book</button>
+        <button className="add-btn" type="submit">
+          Add Book
+        </button>
       </form>
     </div>
   );
