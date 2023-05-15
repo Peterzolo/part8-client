@@ -30,20 +30,14 @@ const AddBook = () => {
   const [published, setPublished] = useState("");
   const [genres, setGenres] = useState([]);
 
-  const [addBook] = useMutation(ADD_BOOK, {
-    refetchQueries: [{ query: ALL_BOOKS }], // Update book list after adding a new book
-    onError: (error) => {
-      // Handle error
-      console.log(error);
-    },
-  });
+  const [addBook] = useMutation(ADD_BOOK);
 
   const handleAddBook = (event) => {
     event.preventDefault();
+
     addBook({
       variables: { title, author, published: parseInt(published), genres },
     });
-    // Reset form fields
     setTitle("");
     setAuthor("");
     setPublished("");
