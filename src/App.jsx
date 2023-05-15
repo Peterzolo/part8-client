@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Menu from "./components/menu/Menu";
 import AuthorList from "./components/authors/AuthorList";
 import AuthorDetails from "./components/authors/AuthorDetails";
+import AddBook from "./components/book/AddBook";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/:id" element={<BookDetails />} />
         <Route path="/authors" element={<AuthorList />} />
         <Route path="/author/:id" element={<AuthorDetails />} />
+        <Route path="/book/add" element={<AddBook />} />
       </Routes>
     </Router>
   );

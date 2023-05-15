@@ -13,6 +13,9 @@ const Menu = () => {
         <Link to={"/authors"} style={{ textDecoration: "none" }}>
           <li className="menu-item">Authors</li>
         </Link>
+        <Link to={"/book/add"} style={{ textDecoration: "none" }}>
+          <li className="menu-item">Add Book</li>
+        </Link>
       </ul>
     </div>
   );
