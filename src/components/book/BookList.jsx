@@ -1,5 +1,4 @@
 import React from "react";
-import BookDetails from "./BookDetails";
 import { gql, useQuery } from "@apollo/client";
 
 const ALL_BOOKS = gql`
@@ -28,11 +27,11 @@ const BookList = () => {
     <div>
       <h2>Book List</h2>
 
-      <div>
+      <div className="container">
         {data.allBooks &&
           data.allBooks.map((book) => (
             <div key={book.id}>
-              <BookDetails book={book} />
+              <div>{book.title}</div>
             </div>
           ))}
       </div>
