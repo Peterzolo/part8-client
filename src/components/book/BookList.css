@@ -19,3 +19,15 @@
   padding: 20px;
   border-radius: 10px;
 }
+
+.wrap {
+  display: flex;
+  margin-top: 10px;
+  width: 500px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.book {
+  cursor: pointer;
+}

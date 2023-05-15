@@ -2,6 +2,7 @@ import React from "react";
 import { gql, useQuery } from "@apollo/client";
 
 import "../book/BookList.css";
+import { useNavigate } from "react-router-dom";
 
 const ALL_BOOKS = gql`
   query {
@@ -16,6 +17,7 @@ const ALL_BOOKS = gql`
 
 const BookList = () => {
   const { loading, error, data } = useQuery(ALL_BOOKS);
+  const navigate = useNavigate();
 
   if (loading) {
     return <div>Loading...</div>;
@@ -32,7 +34,9 @@ const BookList = () => {
         {data.allBooks &&
           data.allBooks.map((book) => (
             <div key={book.id} className="book-wrap">
-              <div className="book">{book.title}</div>
+              <div className="book" onClick={() => navigate(`/${book.id}`)}>
+                {book.title}
+              </div>
             </div>
           ))}
       </div>
