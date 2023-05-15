@@ -1,13 +1,18 @@
 import React from "react";
 
 import "../menu/Menu.css";
+import { Link } from "react-router-dom";
 
 const Menu = () => {
   return (
     <div className="main-menu-wrapper">
       <ul className="menu-wrap">
-        <li className="menu-item">Books</li>
-        <li className="menu-item">Authors</li>
+        <Link to={"/"} style={{ textDecoration: "none" }}>
+          <li className="menu-item">Books</li>
+        </Link>
+        <Link to={"/authors"} style={{ textDecoration: "none" }}>
+          <li className="menu-item">Authors</li>
+        </Link>
       </ul>
     </div>
   );
