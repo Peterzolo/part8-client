@@ -34,8 +34,20 @@ const BookList = () => {
         {data.allBooks &&
           data.allBooks.map((book) => (
             <div key={book.id} className="book-wrap">
-              <div className="book" onClick={() => navigate(`/${book.id}`)}>
-                {book.title}
+              <div className="all-wrap">
+                <h5>books</h5>
+                <div className="" onClick={() => navigate(`/${book.id}`)}>
+                  {book.title}
+                </div>
+              </div>
+
+              <div className="all-wrap">
+                <h5>Author</h5>
+                <div>{book.author}</div>
+              </div>
+              <div className="all-wrap">
+                <h5>Published</h5>
+                <div>{book.published}</div>
               </div>
             </div>
           ))}
