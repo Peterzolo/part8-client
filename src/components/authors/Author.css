@@ -19,3 +19,15 @@
   padding: 20px;
   border-radius: 10px;
 }
+
+.all-wrap {
+  display: flex;
+  width: 400px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  margin-top: 3px;
+  background-color: #434343;
+  border-radius: 10px;
+  color: white;
+}

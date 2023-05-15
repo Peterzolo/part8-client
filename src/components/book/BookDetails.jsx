@@ -7,6 +7,7 @@ const GET_BOOK_DETAILS = gql`
     findBook(id: $findBookId) {
       title
       author
+      genres
       published
       id
     }
@@ -36,6 +37,10 @@ const BookDetails = () => {
       <div className="wrap">
         <h3>Title :</h3>
         <h4>{book.title}</h4>
+      </div>
+      <div className="wrap">
+        <h3>Genre :</h3>
+        <h4>{book.genres}</h4>
       </div>
       <div className="wrap">
         <h3>Author :</h3>
