@@ -43,3 +43,20 @@
   border-radius: 10px;
   color: white;
 }
+
+.form-wrap {
+  width: 500px;
+  margin: 0 auto;
+}
+
+.input-wrap {
+  display: flex;
+  flex-direction: column;
+}
+.form-input {
+  width: 90%;
+  height: 40px;
+  background-color: #d9d9d9;
+  border: none;
+  padding: 10px;
+}
