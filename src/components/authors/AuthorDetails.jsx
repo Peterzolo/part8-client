@@ -1,25 +1,42 @@
-import React from "react";
-import { gql, useQuery } from "@apollo/client";
+import React, { useState } from "react";
+import { gql, useQuery, useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
 
-const GET_BOOK_DETAILS = gql`
-  query findAuthorQuery($findAuthorId: String!) {
+const GET_AUTHOR_DETAILS = gql`
+  query FindAuthor($findAuthorId: String!) {
     findAuthor(id: $findAuthorId) {
       name
       born
-      bookCount
+    }
+  }
+`;
+
+const UPDATE_AUTHOR_BORN_YEAR = gql`
+  mutation EditAuthor($authorId: ID!, $born: Int!) {
+    editAuthor(id: $authorId, born: $born) {
       id
+      born
     }
   }
 `;
 
 const AuthorDetails = () => {
-  const { id } = useParams(); // Retrieve the book ID from the URL parameters
-  const { loading, error, data } = useQuery(GET_BOOK_DETAILS, {
-    variables: { findAuthorId: id }, // Pass the variable with its value
+  const { id } = useParams();
+  const { loading, error, data } = useQuery(GET_AUTHOR_DETAILS, {
+    variables: { findAuthorId: id },
   });
+  const [updateAuthorBornYear] = useMutation(UPDATE_AUTHOR_BORN_YEAR);
+  const [bornYear, setBornYear] = useState("");
 
-  console.log("DATA", data);
+  const handleUpdateBornYear = (event) => {
+    event.preventDefault();
+    updateAuthorBornYear({
+      variables: { authorId: id, born: parseInt(bornYear) },
+      refetchQueries: [
+        { query: GET_AUTHOR_DETAILS, variables: { findAuthorId: id } },
+      ],
+    });
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -29,22 +46,35 @@ const AuthorDetails = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  const author = data.findBook;
+  const author = data.findAuthor;
+  console.log("Author", author);
 
   return (
     <div className="container">
       <div className="wrap">
-        <h3>Name :</h3>
+        <h3>Name:</h3>
         <h4>{author.name}</h4>
       </div>
       <div className="wrap">
-        <h3>Genre :</h3>
+        <h3>Born:</h3>
         <h4>{author.born}</h4>
       </div>
       <div className="wrap">
-        <h3>Number Of Books :</h3>
+        <h3>Number Of Books:</h3>
         <h4>{author.bookCount}</h4>
       </div>
+      <hr />
+      <form onSubmit={handleUpdateBornYear}>
+        <div className="wrap">
+          <h3>Update Born Year:</h3>
+          <input
+            type="number"
+            value={bornYear}
+            onChange={(e) => setBornYear(e.target.value)}
+          />
+        </div>
+        <button type="submit">Edit</button>
+      </form>
     </div>
   );
 };

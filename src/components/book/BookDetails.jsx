@@ -20,8 +20,6 @@ const BookDetails = () => {
     variables: { findBookId: id }, // Pass the variable with its value
   });
 
-  console.log("DATA", data);
-
   if (loading) {
     return <div>Loading...</div>;
   }
