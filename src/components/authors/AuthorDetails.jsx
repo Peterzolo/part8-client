@@ -47,7 +47,6 @@ const AuthorDetails = () => {
   }
 
   const author = data.findAuthor;
-  console.log("Author", author);
 
   return (
     <div className="container">
