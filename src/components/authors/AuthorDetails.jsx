@@ -72,7 +72,7 @@ const AuthorDetails = () => {
             onChange={(e) => setBornYear(e.target.value)}
           />
         </div>
-        <button type="submit">Edit</button>
+        <button type="submit">Update author</button>
       </form>
     </div>
   );
