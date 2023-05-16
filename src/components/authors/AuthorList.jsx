@@ -37,7 +37,7 @@ const AuthorList = () => {
               <div className="all-wrap">
                 <h5>Authors</h5>
                 <div
-                  className=""
+                  className="clickable-name"
                   onClick={() => navigate(`/author/${author.id}`)}
                 >
                   {author.name}

@@ -76,3 +76,9 @@
 label {
   font-weight: 600;
 }
+
+.clickable-name {
+  color: orange;
+  font-weight: bold;
+  cursor: pointer;
+}
