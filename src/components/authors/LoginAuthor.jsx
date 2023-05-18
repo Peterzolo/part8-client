@@ -6,7 +6,8 @@ import "./Author.css";
 const LOGIN_AUTHOR = gql`
   mutation LoginAuthor($loginInput: LoginInput!) {
     loginAuthor(loginInput: $loginInput) {
-      username
+      name
+      token
     }
   }
 `;
@@ -18,16 +19,18 @@ const LoginAuthor = () => {
   });
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const [loginAuthor, { loading, error }] = useMutation(LOGIN_AUTHOR, {
+  const [loginAuthor, { loading, error, data }] = useMutation(LOGIN_AUTHOR, {
     onCompleted: (data) => {
       setLoginInput({
         username: "",
         password: "",
       });
-      localStorage.setItem("token", data.loginAuthor.token); // Assuming the login response includes a token field
+      localStorage.setItem("token", data.loginAuthor.token);
+      localStorage.setItem("author-name", data.loginAuthor.name);
       setIsLoggedIn(true);
     },
   });
+  console.log("DATA", data);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -51,6 +54,7 @@ const LoginAuthor = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("author-name");
     setIsLoggedIn(false);
   };
 
