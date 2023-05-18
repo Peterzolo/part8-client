@@ -24,14 +24,14 @@ const LoginAuthor = () => {
         username: "",
         password: "",
       });
-      localStorage.setItem("authorDetails", JSON.stringify(data.loginAuthor));
+      localStorage.setItem("token", data.loginAuthor.token); // Assuming the login response includes a token field
       setIsLoggedIn(true);
     },
   });
 
   useEffect(() => {
-    const storedAuthorDetails = localStorage.getItem("authorDetails");
-    if (storedAuthorDetails) {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
       setIsLoggedIn(true);
     }
   }, []);
@@ -50,7 +50,7 @@ const LoginAuthor = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("authorDetails");
+    localStorage.removeItem("token");
     setIsLoggedIn(false);
   };
 
