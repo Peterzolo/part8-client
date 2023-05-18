@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 
+import "./Author.css";
+
 const CREATE_AUTHOR = gql`
   mutation CreateAuthor($authorInput: AuthorInput!) {
     createAuthor(authorInput: $authorInput) {
@@ -47,50 +49,42 @@ const CreateAuthor = () => {
   };
 
   return (
-    <div>
-      <h2>Add Author</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input
-            type="text"
-            name="name"
-            value={authorInput.name}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Username:
-          <input
-            type="text"
-            name="username"
-            value={authorInput.username}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={authorInput.password}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label>
-          Born:
-          <input
-            type="number"
-            name="born"
-            value={authorInput.born || ""}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <button type="submit" disabled={loading}>
+    <div className="container">
+      <form onSubmit={handleSubmit} className="form-wrap">
+        <h2 className="add-title">Add Register</h2>
+        <input
+          className="form-input"
+          type="text"
+          name="name"
+          placeholder="Name"
+          value={authorInput.name}
+          onChange={handleChange}
+        />
+        <input
+          className="form-input"
+          type="text"
+          name="username"
+          placeholder="Username"
+          value={authorInput.username}
+          onChange={handleChange}
+        />
+        <input
+          className="form-input"
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={authorInput.password}
+          onChange={handleChange}
+        />
+        <input
+          className="form-input"
+          type="number"
+          placeholder="Born year"
+          name="born"
+          value={authorInput.born || ""}
+          onChange={handleChange}
+        />
+        <button className="add-btn" type="submit" disabled={loading}>
           Add Author
         </button>
       </form>
