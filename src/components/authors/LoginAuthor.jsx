@@ -3,41 +3,34 @@ import { gql, useMutation } from "@apollo/client";
 
 import "./Author.css";
 
-const CREATE_AUTHOR = gql`
+const LOGIN_AUTHOR = gql`
   mutation CreateAuthor($authorInput: AuthorInput!) {
     createAuthor(authorInput: $authorInput) {
-      _id
-      name
       username
       password
-      born
     }
   }
 `;
 
-const CreateAuthor = () => {
+const LoginAuthor = () => {
   const [authorInput, setAuthorInput] = useState({
-    name: "",
     username: "",
     password: "",
-    born: 0,
   });
 
-  const [createAuthor, { loading, error }] = useMutation(CREATE_AUTHOR, {
+  const [LoginAuthor, { loading, error }] = useMutation(LOGIN_AUTHOR, {
     onCompleted: () => {
       // Reset the form after successful creation
       setAuthorInput({
-        name: "",
         username: "",
         password: "",
-        born: 0,
       });
     },
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createAuthor({ variables: { authorInput } });
+    LoginAuthor({ variables: { authorInput } });
   };
 
   const handleChange = (e) => {
@@ -52,15 +45,7 @@ const CreateAuthor = () => {
   return (
     <div className="container">
       <form onSubmit={handleSubmit} className="form-wrap">
-        <h2 className="add-title">Add Register</h2>
-        <input
-          className="form-input"
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={authorInput.name}
-          onChange={handleChange}
-        />
+        <h2 className="add-title">Login</h2>
         <input
           className="form-input"
           type="text"
@@ -77,16 +62,9 @@ const CreateAuthor = () => {
           value={authorInput.password}
           onChange={handleChange}
         />
-        <input
-          className="form-input"
-          type="number"
-          placeholder="Born year"
-          name="born"
-          value={authorInput.born || ""}
-          onChange={handleChange}
-        />
+
         <button className="add-btn" type="submit" disabled={loading}>
-          Add Author
+          Login
         </button>
       </form>
       {loading && <p>Loading...</p>}
@@ -95,4 +73,4 @@ const CreateAuthor = () => {
   );
 };
 
-export default CreateAuthor;
+export default LoginAuthor;

@@ -19,6 +19,9 @@ const Menu = () => {
         <Link to={"/author/add"} style={{ textDecoration: "none" }}>
           <li className="menu-item">Add Author</li>
         </Link>
+        <Link to={"/author/login"} style={{ textDecoration: "none" }}>
+          <li className="menu-item">Login</li>
+        </Link>
       </ul>
     </div>
   );

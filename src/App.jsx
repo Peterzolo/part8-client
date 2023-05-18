@@ -9,6 +9,7 @@ import AuthorDetails from "./components/authors/AuthorDetails";
 import AddBook from "./components/book/AddBook";
 import EditAuthor from "./components/authors/EditAuthor";
 import CreateAuthor from "./components/authors/CreateAuthor";
+import LoginAuthor from "./components/authors/LoginAuthor";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/book/add" element={<AddBook />} />
         <Route path="/author/edit/:id" element={<EditAuthor />} />
         <Route path="/author/add" element={<CreateAuthor />} />
+        <Route path="/author/login" element={<LoginAuthor />} />
       </Routes>
     </Router>
   );
