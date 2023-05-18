@@ -17,9 +17,10 @@ const LoginAuthor = () => {
     username: "",
     password: "",
   });
+  // eslint-disable-next-line no-unused-vars
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const [loginAuthor, { loading, error, data }] = useMutation(LOGIN_AUTHOR, {
+  const [loginAuthor, { loading, error }] = useMutation(LOGIN_AUTHOR, {
     onCompleted: (data) => {
       setLoginInput({
         username: "",
@@ -30,7 +31,6 @@ const LoginAuthor = () => {
       setIsLoggedIn(true);
     },
   });
-  console.log("DATA", data);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -51,23 +51,6 @@ const LoginAuthor = () => {
       [name]: value,
     }));
   };
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("author-name");
-    setIsLoggedIn(false);
-  };
-
-  if (isLoggedIn) {
-    return (
-      <div className="container">
-        <h2 className="add-title">You are logged in!</h2>
-        <button className="add-btn" onClick={handleLogout}>
-          Logout
-        </button>
-      </div>
-    );
-  }
 
   return (
     <div className="container">
