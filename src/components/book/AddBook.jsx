@@ -1,31 +1,32 @@
 import React, { useState } from "react";
-
 import { gql, useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 
 const ADD_BOOK = gql`
   mutation addBook(
     $title: String!
-    $author: String!
+    $author: ID!
     $published: Int!
     $genres: [String]!
   ) {
     addBook(
-      title: $title
-      author: $author
-      published: $published
-      genres: $genres
+      book: {
+        title: $title
+        author: $author
+        published: $published
+        genres: $genres
+      }
     ) {
       title
-      author
+      author {
+        name
+      }
       published
       genres
       id
     }
   }
 `;
-
-import "../book/BookList.css";
 
 const AddBook = () => {
   const navigate = useNavigate();
