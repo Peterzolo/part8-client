@@ -1,46 +1,69 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { gql, useMutation } from "@apollo/client";
 
 import "./Author.css";
 
 const LOGIN_AUTHOR = gql`
-  mutation CreateAuthor($authorInput: AuthorInput!) {
-    createAuthor(authorInput: $authorInput) {
+  mutation LoginAuthor($loginInput: LoginInput!) {
+    loginAuthor(loginInput: $loginInput) {
       username
-      password
     }
   }
 `;
 
 const LoginAuthor = () => {
-  const [authorInput, setAuthorInput] = useState({
+  const [loginInput, setLoginInput] = useState({
     username: "",
     password: "",
   });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const [LoginAuthor, { loading, error }] = useMutation(LOGIN_AUTHOR, {
-    onCompleted: () => {
-      // Reset the form after successful creation
-      setAuthorInput({
+  const [loginAuthor, { loading, error }] = useMutation(LOGIN_AUTHOR, {
+    onCompleted: (data) => {
+      setLoginInput({
         username: "",
         password: "",
       });
+      localStorage.setItem("authorDetails", JSON.stringify(data.loginAuthor));
+      setIsLoggedIn(true);
     },
   });
 
+  useEffect(() => {
+    const storedAuthorDetails = localStorage.getItem("authorDetails");
+    if (storedAuthorDetails) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    LoginAuthor({ variables: { authorInput } });
+    loginAuthor({ variables: { loginInput } });
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const parsedValue = name === "born" ? parseInt(value) : value;
-    setAuthorInput((prevInput) => ({
+    setLoginInput((prevInput) => ({
       ...prevInput,
-      [name]: parsedValue,
+      [name]: value,
     }));
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem("authorDetails");
+    setIsLoggedIn(false);
+  };
+
+  if (isLoggedIn) {
+    return (
+      <div className="container">
+        <h2 className="add-title">You are logged in!</h2>
+        <button className="add-btn" onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="container">
@@ -51,7 +74,7 @@ const LoginAuthor = () => {
           type="text"
           name="username"
           placeholder="Username"
-          value={authorInput.username}
+          value={loginInput.username}
           onChange={handleChange}
         />
         <input
@@ -59,7 +82,7 @@ const LoginAuthor = () => {
           type="password"
           name="password"
           placeholder="Password"
-          value={authorInput.password}
+          value={loginInput.password}
           onChange={handleChange}
         />
 
@@ -68,7 +91,7 @@ const LoginAuthor = () => {
         </button>
       </form>
       {loading && <p>Loading...</p>}
-      {error && <p>Error occurred while adding an author: {error.message}</p>}
+      {error && <p>Error occurred while logging in: {error.message}</p>}
     </div>
   );
 };
