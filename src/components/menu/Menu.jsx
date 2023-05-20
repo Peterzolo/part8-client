@@ -5,13 +5,16 @@ import "../menu/Menu.css";
 
 const Menu = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState("");
   const navigate = useNavigate();
 
+  console.log("USER", user);
+
   useEffect(() => {
-    // Check if the user is logged in based on the presence of a token in localStorage
     const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token); // Set isLoggedIn to true if a token exists, false otherwise
-  }, []); // Run this effect only once when the component mounts
+    setIsLoggedIn(!!token);
+    setUser(localStorage.getItem("author-name"));
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -21,7 +24,7 @@ const Menu = () => {
   };
 
   return (
-    <div className="main-menu-wrapper">
+    <div className="container">
       <ul className="menu-wrap">
         <Link to={"/"} style={{ textDecoration: "none" }}>
           <li className="menu-item">Books</li>
@@ -45,6 +48,7 @@ const Menu = () => {
             <li className="menu-item">Login</li>
           </Link>
         )}
+        {user && <li className="menu-item"> You are logged in as :{user}</li>}
       </ul>
     </div>
   );

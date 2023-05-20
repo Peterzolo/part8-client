@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { gql, useMutation } from "@apollo/client";
 
 import "./Author.css";
+import { useNavigate } from "react-router-dom";
 
 const LOGIN_AUTHOR = gql`
   mutation LoginAuthor($loginInput: LoginInput!) {
@@ -19,6 +20,7 @@ const LoginAuthor = () => {
   });
   // eslint-disable-next-line no-unused-vars
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   const [loginAuthor, { loading, error }] = useMutation(LOGIN_AUTHOR, {
     onCompleted: (data) => {
@@ -27,7 +29,7 @@ const LoginAuthor = () => {
         password: "",
       });
       localStorage.setItem("token", data.loginAuthor.token);
-      localStorage.setItem("author-name", data.loginAuthor.name);
+      // localStorage.setItem("author-name", data.loginAuthor.name);
       setIsLoggedIn(true);
     },
   });
@@ -42,6 +44,7 @@ const LoginAuthor = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     loginAuthor({ variables: { loginInput } });
+    navigate("/");
   };
 
   const handleChange = (e) => {

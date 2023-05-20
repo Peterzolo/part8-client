@@ -1,29 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 
 const ADD_BOOK = gql`
-  mutation addBook(
-    $title: String!
-    $author: ID!
-    $published: Int!
-    $genres: [String]!
-  ) {
-    addBook(
-      book: {
-        title: $title
-        author: $author
-        published: $published
-        genres: $genres
-      }
-    ) {
+  mutation addBook($bookInput: BookInput!) {
+    addBook(bookInput: $bookInput) {
       title
-      author {
-        name
-      }
       published
-      genres
-      id
+      genre
     }
   }
 `;
@@ -31,28 +15,35 @@ const ADD_BOOK = gql`
 const AddBook = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
   const [published, setPublished] = useState("");
-  const [genres, setGenres] = useState([]);
+  const [genre, setGenre] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [addBook] = useMutation(ADD_BOOK);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const handleAddBook = (event) => {
     event.preventDefault();
 
     addBook({
       variables: {
-        title,
-        author,
-        published: parseInt(published),
-        genres: genres.map((genre) => genre.trim()), // Trim whitespace from genres
+        bookInput: {
+          title: title,
+          published: parseInt(published),
+          genre: genre.toString(),
+        },
       },
     })
       .then(() => {
         setTitle("");
-        setAuthor("");
         setPublished("");
-        setGenres([]);
+        setGenre("");
         navigate("/");
       })
       .catch((error) => {
@@ -62,48 +53,43 @@ const AddBook = () => {
 
   return (
     <div className="container">
-      <h2>Add Book</h2>
-      <form onSubmit={handleAddBook} className="form-wrap">
-        <div className="input-wrap">
-          <label>Title:</label>
-          <input
-            className="form-input"
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
-        <div className="input-wrap">
-          <label>Author:</label>
-          <input
-            className="form-input"
-            type="text"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-          />
-        </div>
-        <div className="input-wrap">
-          <label>Published:</label>
-          <input
-            className="form-input"
-            type="number"
-            value={published}
-            onChange={(e) => setPublished(e.target.value)}
-          />
-        </div>
-        <div className="input-wrap">
-          <label>Genres:</label>
-          <input
-            className="form-input"
-            type="text"
-            value={genres}
-            onChange={(e) => setGenres(e.target.value.split(","))}
-          />
-        </div>
-        <button className="add-btn" type="submit">
-          Add Book
-        </button>
-      </form>
+      {isLoggedIn ? (
+        <form onSubmit={handleAddBook} className="form-wrap">
+          <div className="add-book-title">Add Book</div>
+          <div className="input-wrap">
+            <label>Title:</label>
+            <input
+              className="form-input"
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+          <div className="input-wrap">
+            <label>Published:</label>
+            <input
+              className="form-input"
+              type="number"
+              value={published}
+              onChange={(e) => setPublished(e.target.value)}
+            />
+          </div>
+          <div className="input-wrap">
+            <label>Genre:</label>
+            <input
+              className="form-input"
+              type="text"
+              value={genre}
+              onChange={(e) => setGenre(e.target.value)}
+            />
+          </div>
+          <button className="add-btn" type="submit">
+            Add Book
+          </button>
+        </form>
+      ) : (
+        <div className="login-to-add">Log To Add</div>
+      )}
     </div>
   );
 };
