@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 
 import "./Author.css";
+import { useNavigate } from "react-router-dom";
 
 const CREATE_AUTHOR = gql`
   mutation CreateAuthor($authorInput: AuthorInput!) {
@@ -16,6 +17,7 @@ const CREATE_AUTHOR = gql`
 `;
 
 const CreateAuthor = () => {
+  const navigate = useNavigate();
   const [authorInput, setAuthorInput] = useState({
     name: "",
     username: "",
@@ -25,7 +27,6 @@ const CreateAuthor = () => {
 
   const [createAuthor, { loading, error }] = useMutation(CREATE_AUTHOR, {
     onCompleted: () => {
-      // Reset the form after successful creation
       setAuthorInput({
         name: "",
         username: "",
@@ -38,6 +39,7 @@ const CreateAuthor = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     createAuthor({ variables: { authorInput } });
+    navigate("/author/login");
   };
 
   const handleChange = (e) => {

@@ -3,11 +3,13 @@ import { gql, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 
 const GET_BOOK_DETAILS = gql`
-  query findBookQuery($findBookId: String!) {
-    findBook(id: $findBookId) {
+  query getBook($id: ID!) {
+    getBook(id: $id) {
       title
-      author
-      genres
+      author {
+        name
+      }
+      genre
       published
       id
     }
@@ -15,9 +17,9 @@ const GET_BOOK_DETAILS = gql`
 `;
 
 const BookDetails = () => {
-  const { id } = useParams(); // Retrieve the book ID from the URL parameters
+  const { id } = useParams();
   const { loading, error, data } = useQuery(GET_BOOK_DETAILS, {
-    variables: { findBookId: id }, // Pass the variable with its value
+    variables: { id },
   });
 
   if (loading) {
@@ -28,7 +30,7 @@ const BookDetails = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  const book = data.findBook;
+  const book = data.getBook;
 
   return (
     <div className="container">
@@ -38,11 +40,11 @@ const BookDetails = () => {
       </div>
       <div className="wrap">
         <h3>Genre :</h3>
-        <h4>{book.genres}</h4>
+        <h4>{book.genre}</h4>
       </div>
       <div className="wrap">
         <h3>Author :</h3>
-        <h4>{book.author}</h4>
+        <h4>{book.author.name}</h4>
       </div>
       <div className="wrap">
         <h3>Year :</h3>

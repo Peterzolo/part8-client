@@ -3,17 +3,19 @@ import { gql, useQuery, useMutation } from "@apollo/client";
 import { useParams } from "react-router-dom";
 
 const GET_AUTHOR_DETAILS = gql`
-  query FindAuthor($findAuthorId: String!) {
-    findAuthor(id: $findAuthorId) {
+  query getAuthor($findAuthorId: ID!) {
+    getAuthor(id: $findAuthorId) {
+      id
       name
       born
+      bookCount
     }
   }
 `;
 
 const UPDATE_AUTHOR_BORN_YEAR = gql`
-  mutation EditAuthor($authorId: ID!, $born: Int!) {
-    editAuthor(id: $authorId, born: $born) {
+  mutation updateAuthor($authorId: ID!, $born: Int!) {
+    updateAuthor(id: $authorId, born: $born) {
       id
       born
     }
@@ -25,6 +27,7 @@ const AuthorDetails = () => {
   const { loading, error, data } = useQuery(GET_AUTHOR_DETAILS, {
     variables: { findAuthorId: id },
   });
+
   const [updateAuthorBornYear] = useMutation(UPDATE_AUTHOR_BORN_YEAR);
   const [bornYear, setBornYear] = useState("");
 
@@ -46,7 +49,7 @@ const AuthorDetails = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  const author = data.findAuthor;
+  const author = data.getAuthor;
 
   return (
     <div className="container">

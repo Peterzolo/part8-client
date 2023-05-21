@@ -6,11 +6,15 @@ import { useNavigate } from "react-router-dom";
 
 const ALL_BOOKS = gql`
   query {
-    allBooks {
+    getAllBooks {
       title
       published
-      author
+      genre
       id
+      author {
+        name
+        born
+      }
     }
   }
 `;
@@ -18,6 +22,8 @@ const ALL_BOOKS = gql`
 const BookList = () => {
   const { loading, error, data } = useQuery(ALL_BOOKS);
   const navigate = useNavigate();
+  const books = data?.getAllBooks;
+  console.log("BOOKS", books);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -31,8 +37,8 @@ const BookList = () => {
     <div className="container">
       <h2 className="book-list-title">Book List</h2>
       <div className="book-hero">
-        {data.allBooks &&
-          data.allBooks.map((book) => (
+        {books &&
+          books?.map((book) => (
             <div key={book.id} className="book-wrap">
               <div className="all-wrap">
                 <h5>books</h5>
@@ -40,14 +46,17 @@ const BookList = () => {
                   {book.title}
                 </div>
               </div>
-
-              <div className="all-wrap">
-                <h5>Author</h5>
-                <div>{book.author}</div>
-              </div>
               <div className="all-wrap">
                 <h5>Published</h5>
                 <div>{book.published}</div>
+              </div>
+              <div className="all-wrap">
+                <h5>Genre</h5>
+                <div>{book.genre}</div>
+              </div>
+              <div className="all-wrap">
+                <h5>Author</h5>
+                <div>{book.author.name}</div>
               </div>
             </div>
           ))}

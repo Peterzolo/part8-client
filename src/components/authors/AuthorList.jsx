@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const ALL_AUTHORS = gql`
   query {
-    allAuthors {
+    getAllAuthors {
       name
       born
       bookCount
@@ -31,8 +31,8 @@ const AuthorList = () => {
     <div className="container">
       <h2 className="author-list-title">author List</h2>
       <div className="author-hero">
-        {data.allAuthors &&
-          data.allAuthors.map((author) => (
+        {data.getAllAuthors &&
+          data.getAllAuthors.map((author) => (
             <div key={author.id} className="author-wrap">
               <div className="all-wrap">
                 <h5>Authors</h5>

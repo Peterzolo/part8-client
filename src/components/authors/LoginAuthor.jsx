@@ -29,7 +29,7 @@ const LoginAuthor = () => {
         password: "",
       });
       localStorage.setItem("token", data.loginAuthor.token);
-      // localStorage.setItem("author-name", data.loginAuthor.name);
+      localStorage.setItem("author-name", data.loginAuthor.name);
       setIsLoggedIn(true);
     },
   });
