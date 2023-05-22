@@ -23,7 +23,7 @@ const BookList = () => {
   const { loading, error, data, refetch } = useQuery(ALL_BOOKS);
   console.log("DATA", data);
   const navigate = useNavigate();
-  const books = data?.getAllBooks || []; // Handle undefined or null case
+  const books = data?.getAllBooks || [];
 
   if (loading) {
     return <div>Loading...</div>;
