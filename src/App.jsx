@@ -10,6 +10,7 @@ import AddBook from "./components/book/AddBook";
 import EditAuthor from "./components/authors/EditAuthor";
 import CreateAuthor from "./components/authors/CreateAuthor";
 import LoginAuthor from "./components/authors/LoginAuthor";
+import SearchBook from "./components/book/SearchBook";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/author/edit/:id" element={<EditAuthor />} />
         <Route path="/author/add" element={<CreateAuthor />} />
         <Route path="/author/login" element={<LoginAuthor />} />
+        <Route path="/book/search" element={<SearchBook />} />
       </Routes>
     </Router>
   );
