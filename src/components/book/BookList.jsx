@@ -5,8 +5,8 @@ import "../book/BookList.css";
 import { useNavigate } from "react-router-dom";
 
 const ALL_BOOKS = gql`
-  query {
-    getAllBooks {
+  query GetAllBooks($genre: String) {
+    getAllBooks(filter: { genre: $genre }) {
       title
       published
       genre

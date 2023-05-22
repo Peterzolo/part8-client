@@ -53,3 +53,18 @@
   text-align: left;
   padding: 10px;
 }
+
+.update-btn {
+  padding: 10px;
+  background-color: orange;
+  border: none;
+  color: white;
+  border-radius: 10px;
+}
+
+.update-input {
+  padding: 10px;
+  width: 400px;
+  border-color: orange;
+  border-radius: 10px;
+}
