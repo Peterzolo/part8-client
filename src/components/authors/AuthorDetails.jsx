@@ -14,8 +14,8 @@ const GET_AUTHOR_DETAILS = gql`
 `;
 
 const UPDATE_AUTHOR_BORN_YEAR = gql`
-  mutation updateAuthor($authorId: ID!, $born: Int!) {
-    updateAuthor(id: $authorId, born: $born) {
+  mutation updateAuthorBornYear($id: ID!, $authorInput: AuthorInput!) {
+    updateAuthor(id: $id, authorInput: $authorInput) {
       id
       born
     }
@@ -34,11 +34,20 @@ const AuthorDetails = () => {
   const handleUpdateBornYear = (event) => {
     event.preventDefault();
     updateAuthorBornYear({
-      variables: { authorId: id, born: parseInt(bornYear) },
+      variables: {
+        id: id,
+        authorInput: { born: parseInt(bornYear) },
+      },
       refetchQueries: [
         { query: GET_AUTHOR_DETAILS, variables: { findAuthorId: id } },
       ],
-    });
+    })
+      .then(() => {
+        setBornYear("");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   if (loading) {
@@ -70,12 +79,15 @@ const AuthorDetails = () => {
         <div className="wrap">
           <h3>Update Born Year:</h3>
           <input
+            className="update-input"
             type="number"
             value={bornYear}
             onChange={(e) => setBornYear(e.target.value)}
           />
         </div>
-        <button type="submit">Update author</button>
+        <button className="update-btn" type="submit">
+          Update author
+        </button>
       </form>
     </div>
   );
