@@ -15,3 +15,25 @@
   font-weight: 600;
   margin-top: 20px;
 }
+
+.menu-item-logout {
+  color: orange;
+  list-style-type: none;
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 20px;
+}
+.menu-item-login {
+  color: rgb(2, 149, 7);
+  list-style-type: none;
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 20px;
+}
+.menu-item-user {
+  color: rgb(2, 149, 7);
+  list-style-type: none;
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 20px;
+}
