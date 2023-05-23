@@ -55,7 +55,7 @@ const BookList = () => {
               </div>
               <div className="all-wrap">
                 <h5>Author</h5>
-                <div>{book.author.name}</div>
+                <div>{book?.author?.name}</div>
               </div>
             </div>
           ))}

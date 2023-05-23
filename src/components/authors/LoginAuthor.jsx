@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { gql, useMutation } from "@apollo/client";
+import { useNavigate } from "react-router-dom";
+import { getAuthToken, setAuthToken, setAuthorName } from "../../auth";
 
 import "./Author.css";
-import { useNavigate } from "react-router-dom";
 
 const LOGIN_AUTHOR = gql`
   mutation LoginAuthor($loginInput: LoginInput!) {
     loginAuthor(loginInput: $loginInput) {
-      name
+      author {
+        name
+      }
       token
     }
   }
@@ -19,7 +22,7 @@ const LoginAuthor = () => {
     password: "",
   });
   // eslint-disable-next-line no-unused-vars
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const navigate = useNavigate();
 
   const [loginAuthor, { loading, error }] = useMutation(LOGIN_AUTHOR, {
@@ -28,23 +31,22 @@ const LoginAuthor = () => {
         username: "",
         password: "",
       });
-      localStorage.setItem("token", data.loginAuthor.token);
-      localStorage.setItem("author-name", data.loginAuthor.name);
-      setIsLoggedIn(true);
+      setAuthToken(data.loginAuthor.token);
+      setAuthorName(data.loginAuthor.author.name);
+      navigate("/");
     },
   });
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
+    const storedToken = getAuthToken();
     if (storedToken) {
-      setIsLoggedIn(true);
+      navigate("/");
     }
-  }, []);
+  }, [navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     loginAuthor({ variables: { loginInput } });
-    navigate("/");
   };
 
   const handleChange = (e) => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ADD_BOOK = gql`
   mutation addBook($bookInput: BookInput!) {
@@ -88,7 +88,14 @@ const AddBook = () => {
           </button>
         </form>
       ) : (
-        <div className="login-to-add">Log To Add</div>
+        <div className="login-to-add">
+          <Link
+            to={"/author/login"}
+            style={{ textDecoration: "none", color: "white", fontSize: "18px" }}
+          >
+            Login To Add
+          </Link>
+        </div>
       )}
     </div>
   );

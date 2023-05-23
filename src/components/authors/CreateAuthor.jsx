@@ -7,10 +7,8 @@ import { useNavigate } from "react-router-dom";
 const CREATE_AUTHOR = gql`
   mutation CreateAuthor($authorInput: AuthorInput!) {
     createAuthor(authorInput: $authorInput) {
-      _id
       name
       username
-      password
       born
     }
   }
@@ -18,28 +16,23 @@ const CREATE_AUTHOR = gql`
 
 const CreateAuthor = () => {
   const navigate = useNavigate();
+
   const [authorInput, setAuthorInput] = useState({
     name: "",
     username: "",
     password: "",
-    born: 0,
+    born: null,
   });
 
   const [createAuthor, { loading, error }] = useMutation(CREATE_AUTHOR, {
     onCompleted: () => {
-      setAuthorInput({
-        name: "",
-        username: "",
-        password: "",
-        born: 0,
-      });
+      navigate("/author/login");
     },
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     createAuthor({ variables: { authorInput } });
-    navigate("/author/login");
   };
 
   const handleChange = (e) => {
