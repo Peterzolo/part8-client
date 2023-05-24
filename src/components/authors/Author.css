@@ -68,3 +68,8 @@
   border-color: orange;
   border-radius: 10px;
 }
+
+.list-wrap li {
+  display: flex;
+  /* flex-wrap: wrap; */
+}

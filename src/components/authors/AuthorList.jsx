@@ -10,6 +10,7 @@ const GET_ALL_AUTHORS = gql`
       name
       born
       bookCount
+      id
       books {
         title
         published
@@ -31,6 +32,8 @@ const AuthorList = () => {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
+
+  console.log();
 
   return (
     <div className="container">
@@ -57,20 +60,14 @@ const AuthorList = () => {
                 <h5>Books</h5>
                 <div>{author.bookCount}</div>
               </div>
-              <div className="all-wrap">
-                <h5>Book List</h5>
+
+              <div className="">
                 {author.books &&
                   author.books.map((book, index) => (
-                    <div key={index}>
-                      <div>
-                        <strong>Title:</strong> {book.title}
-                      </div>
-                      <div>
-                        <strong>Published:</strong> {book.published}
-                      </div>
-                      <div>
-                        <strong>Genre:</strong> {book.genre}
-                      </div>
+                    <div key={index} className="list-wrap">
+                      <ul className="">
+                        <li>{book.title}</li>
+                      </ul>
                     </div>
                   ))}
               </div>

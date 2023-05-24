@@ -1,0 +1,16 @@
+.notification {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: #e3f2fd;
+  padding: 10px 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+}
+
+.notification span {
+  color: #1976d2;
+  font-weight: bold;
+}

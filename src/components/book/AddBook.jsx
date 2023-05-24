@@ -1,10 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation, useSubscription } from "@apollo/client";
 import { Link, useNavigate } from "react-router-dom";
+import Notification from "../notification/Notification";
 
 const ADD_BOOK = gql`
   mutation addBook($bookInput: BookInput!) {
     addBook(bookInput: $bookInput) {
+      title
+      published
+      genre
+    }
+  }
+`;
+
+const NEW_BOOK_SUBSCRIPTION = gql`
+  subscription {
+    newBook {
       title
       published
       genre
@@ -19,7 +30,11 @@ const AddBook = () => {
   const [genre, setGenre] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const [showNotification, setShowNotification] = useState(false);
+
   const [addBook] = useMutation(ADD_BOOK);
+
+  const { data: newBookData } = useSubscription(NEW_BOOK_SUBSCRIPTION);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -27,6 +42,16 @@ const AddBook = () => {
       setIsLoggedIn(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (newBookData && newBookData.newBook) {
+      console.log(newBookData);
+      setShowNotification(true);
+      setTimeout(() => {
+        setShowNotification(false);
+      }, 3000);
+    }
+  }, [newBookData]);
 
   const handleAddBook = (event) => {
     event.preventDefault();
@@ -53,6 +78,9 @@ const AddBook = () => {
 
   return (
     <div className="container">
+      <div className="notification">
+        {showNotification && <Notification message="New book added!" />}{" "}
+      </div>
       {isLoggedIn ? (
         <form onSubmit={handleAddBook} className="form-wrap">
           <div className="add-book-title">Add Book</div>

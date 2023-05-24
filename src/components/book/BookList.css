@@ -119,3 +119,8 @@ label {
   text-align: center;
   font-weight: bold;
 }
+
+.notification {
+  background-color: red;
+  padding: 20px;
+}

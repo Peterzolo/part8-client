@@ -20,7 +20,7 @@ const ALL_BOOKS = gql`
 
 const BookList = () => {
   const { loading, error, data } = useQuery(ALL_BOOKS);
-  console.log("DATA", data);
+  console.log("DATA---", data);
   const navigate = useNavigate();
   const books = data?.getAllBooks;
 
